@@ -22,12 +22,16 @@ RUN apt-get install -y python-ipaddress
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get install -y python3-sphinx
 RUN apt-get install -y install-info
-# Mandatory libyang
+RUN apt-get install -y cmake
 RUN apt-get install -y wget
-RUN wget --quiet https://ci1.netdef.org/artifact/LIBYANG-YANGRELEASE/shared/build-1/Ubuntu-18.04-x86_64-Packages/libyang-dev_0.16.46_amd64.deb
-RUN wget --quiet https://ci1.netdef.org/artifact/LIBYANG-YANGRELEASE/shared/build-1/Ubuntu-18.04-x86_64-Packages/libyang_0.16.46_amd64.deb
+RUN apt-get install -y devscripts
+RUN apt-get install -y rpm
+RUN apt-get install -y libpcre3
 RUN apt-get install -y libpcre3-dev
-RUN dpkg -i libyang-dev_0.16.46_amd64.deb libyang_0.16.46_amd64.deb
+# Mandatory libyang
+RUN cd; git clone https://github.com/CESNET/libyang.git
+RUN cd ~/libyang; mkdir build; cd build; cmake -DENABLE_LYD_PRIV=ON -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
+RUN cd ~/libyang/build; make; make install
 # Optional dependencies
 RUN apt-get install -y protobuf-c-compiler
 RUN apt-get install -y libprotobuf-c-dev
@@ -38,6 +42,12 @@ RUN groupadd -r -g 92 frr
 RUN groupadd -r -g 85 frrvty
 RUN adduser --system --ingroup frr --home /var/run/frr/ --gecos "FRR suite" --shell /sbin/nologin frr
 RUN usermod -a -G frrvty frr
+# Enable IPv4 and IPv6 forwarding
+RUN sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
+RUN sed -i 's/#net.ipv6.conf.all.forwarding=1/net.ipv6.conf.all.forwarding=1/g' /etc/sysctl.conf
+# TODO: Enable MPLS
+# Usefull tools
+RUN apt-get install -y vim
 # Use "live" FRR source code
 VOLUME /frr
 VOLUME /scripts

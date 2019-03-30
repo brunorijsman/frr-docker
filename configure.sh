@@ -1,3 +1,4 @@
+#!/bin/bash
 cd /frr
 ./bootstrap.sh
 ./configure \
