@@ -5,5 +5,5 @@ docker run \
     --cap-add=SYS_ADMIN \
     --interactive \
     --tty \
-    frr \
+    frr-bruno \
     bash

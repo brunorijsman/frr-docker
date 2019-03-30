@@ -1,1 +1,1 @@
-docker build . --tag frr
+docker build . --tag frr-bruno

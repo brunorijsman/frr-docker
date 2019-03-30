@@ -28,6 +28,7 @@ RUN apt-get install -y devscripts
 RUN apt-get install -y rpm
 RUN apt-get install -y libpcre3
 RUN apt-get install -y libpcre3-dev
+RUN apt-get install -y iproute2
 # Mandatory libyang
 RUN cd; git clone https://github.com/CESNET/libyang.git
 RUN cd ~/libyang; mkdir build; cd build; cmake -DENABLE_LYD_PRIV=ON -DCMAKE_INSTALL_PREFIX:PATH=/usr ..
@@ -37,6 +38,10 @@ RUN apt-get install -y protobuf-c-compiler
 RUN apt-get install -y libprotobuf-c-dev
 RUN apt-get install -y libzmq5
 RUN apt-get install -y libzmq3-dev
+# Usefull tools
+RUN apt-get install -y vim
+RUN apt-get install -y iputils-ping
+RUN apt-get install -y tcpdump
 # Add FRR groups and user
 RUN groupadd -r -g 92 frr
 RUN groupadd -r -g 85 frrvty
@@ -46,8 +51,6 @@ RUN usermod -a -G frrvty frr
 RUN sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
 RUN sed -i 's/#net.ipv6.conf.all.forwarding=1/net.ipv6.conf.all.forwarding=1/g' /etc/sysctl.conf
 # TODO: Enable MPLS
-# Usefull tools
-RUN apt-get install -y vim
 # Use "live" FRR source code
 VOLUME /frr
 VOLUME /scripts
