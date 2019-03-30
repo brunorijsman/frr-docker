@@ -1,0 +1,9 @@
+docker run \
+    --volume "/Users/brunorijsman/frr":/frr \
+    --volume "/Users/brunorijsman/frr-docker":/scripts \
+    --cap-add=NET_ADMIN \
+    --cap-add=SYS_ADMIN \
+    --interactive \
+    --tty \
+    frr \
+    bash
