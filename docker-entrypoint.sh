@@ -5,7 +5,12 @@ if [ "$1" = 'shell' ]; then
 elif [ "$1" = 'make' ]; then
         cd /frr
         make
+elif [ "$1" = 'make-install' ]; then
+        cd /frr
+        make
         make install
+        # TODO: This is just a place-holder for now, because once "make install" is finished, the
+        # container terminates and the installation is lost.
 elif [ "$1" = 'debug' ]; then
         export LD_LIBRARY_PATH=/frr/lib/.libs
         ldconfig /frr/lib/.libs
