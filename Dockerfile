@@ -42,6 +42,7 @@ RUN apt-get install -y libzmq3-dev
 RUN apt-get install -y vim
 RUN apt-get install -y iputils-ping
 RUN apt-get install -y tcpdump
+RUN apt-get install -y gdbserver
 # Add FRR groups and user
 RUN groupadd -r -g 92 frr
 RUN groupadd -r -g 85 frrvty
