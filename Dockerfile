@@ -1,5 +1,6 @@
 FROM ubuntu:bionic
 RUN apt-get update
+RUN apt-get install -y apt-utils
 # Mandatory dependencies
 RUN apt-get install -y git
 RUN apt-get install -y autoconf
@@ -42,7 +43,11 @@ RUN apt-get install -y libzmq3-dev
 RUN apt-get install -y vim
 RUN apt-get install -y iputils-ping
 RUN apt-get install -y tcpdump
+RUN apt-get install -y net-tools
+RUN apt-get install -y ssh
+# Needed for remote debug
 RUN apt-get install -y gdbserver
+EXPOSE 4444
 # Add FRR groups and user
 RUN groupadd -r -g 92 frr
 RUN groupadd -r -g 85 frrvty
@@ -55,3 +60,7 @@ RUN sed -i 's/#net.ipv6.conf.all.forwarding=1/net.ipv6.conf.all.forwarding=1/g' 
 # Use "live" FRR source code
 VOLUME /frr
 VOLUME /scripts
+# Entry point
+COPY ./docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["shell"]

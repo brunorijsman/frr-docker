@@ -1,9 +1,12 @@
+# Note: port 4444 is used for GDB
 docker run \
     --volume "/Users/brunorijsman/frr":/frr \
     --volume "/Users/brunorijsman/frr-docker":/scripts \
     --cap-add=NET_ADMIN \
     --cap-add=SYS_ADMIN \
+    --privileged=true \
     --interactive \
     --tty \
+    --publish 4444:4444 \
     frr-bruno \
-    bash
+    "$@"
