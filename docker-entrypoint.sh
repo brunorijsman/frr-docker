@@ -2,12 +2,14 @@
 set -e
 if [ "$1" = 'shell' ]; then
         bash
-elif [ "$1" = 'debug' ]; then
-        echo "Compile test program"
+elif [ "$1" = 'make' ]; then
         cd /frr
-        gcc -g test.c
-        echo "Start GDB session for test program"
-        gdbserver localhost:4444 a.out
+        make
+        make install
+elif [ "$1" = 'debug' ]; then
+        export LD_LIBRARY_PATH=/frr/lib/.libs
+        ldconfig /frr/lib/.libs
+        gdbserver localhost:4444 /frr/isisd/.libs/isisd
 else
         exec "$@"
 fi
