@@ -14,7 +14,11 @@ elif [ "$1" = 'make-install' ]; then
 elif [ "$1" = 'debug' ]; then
         export LD_LIBRARY_PATH=/frr/lib/.libs
         ldconfig /frr/lib/.libs
-        gdbserver localhost:4444 /frr/isisd/.libs/isisd
+        gdbserver localhost:4444 /frr/riftd/.libs/riftd
+elif [ "$1" = 'cli' ]; then
+        /scripts/install.sh
+        /scripts/start.sh
+        vtysh
 else
         exec "$@"
 fi

@@ -61,6 +61,5 @@ RUN sed -i 's/#net.ipv6.conf.all.forwarding=1/net.ipv6.conf.all.forwarding=1/g' 
 VOLUME /frr
 VOLUME /scripts
 # Entry point
-COPY ./docker-entrypoint.sh /
-ENTRYPOINT ["/docker-entrypoint.sh"]
+ENTRYPOINT ["/scripts/docker-entrypoint.sh"]
 CMD ["shell"]
